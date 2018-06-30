@@ -1,4 +1,7 @@
 version: "2.0"
+volumes:
+  vol-mongo:
+  vol-nodered:
 
 services:
   mongo-db:
@@ -6,7 +9,9 @@ services:
     image: mongo
     environment: 
       - MONGO_INITDB_DATABASE=teste
-  
+    volumes: 
+      - vol-mongo
+
   mongo-client:
     container_name: mongo-client
     image: mongoclient/mongoclient
@@ -16,3 +21,12 @@ services:
       - "mongo-db:mongo-client"
     ports: 
       - "3000:3000"
+
+  node-red:
+    container_name: node-red
+    image: nodered/node-red-docker
+    ports:
+      - "1880:1880"
+    volumes: 
+      - vol-nodered
+
